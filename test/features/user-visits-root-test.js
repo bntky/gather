@@ -9,6 +9,11 @@ describe('User visits root', () => {
   });
   describe('and can navigate', () => {
     it('to /create', () => {
+      browser.url('/');
+
+      browser.click('a[href="create.html"]');
+
+      assert.include(browser.getText('body'), 'Create');
     });
   });
 });
