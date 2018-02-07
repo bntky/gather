@@ -7,4 +7,8 @@ describe('User visits root', () => {
       assert.equal(browser.getText('#items-container'), '');
     });
   });
+  describe('and can navigate', () => {
+    it('to /create', () => {
+    });
+  });
 });
