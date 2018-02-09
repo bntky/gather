@@ -13,6 +13,7 @@ router.get('/items/create', async (req, res, next) => {
 });
 
 router.post('/items/create', async (req, res, next) => {
+  res.render('index');
 });
 
 
