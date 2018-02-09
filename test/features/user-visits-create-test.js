@@ -9,7 +9,7 @@ describe('User visits create page', () => {
 
       browser.setValue('#title-input', title);
       browser.setValue('#description-input', description);
-      browser.setValue('#imgUrl-input', imageUrl);
+      browser.setValue('#imageUrl-input', imageUrl);
       browser.click('#submit-button');
 
       assert.include(browser.getText('body'), title);

@@ -30,7 +30,7 @@ describe('Server path: /items/create', () => {
       const response = await request(app).get('/items/create');
 
       assert.equal(parseTextFromHTML(response.text, 'input#title-input'), '');
-      assert.equal(parseTextFromHTML(response.text, 'input#imgUrl-input'), '');
+      assert.equal(parseTextFromHTML(response.text, 'input#imageUrl-input'), '');
       assert.equal(parseTextFromHTML(response.text,
                                      'textarea#description-input'), '');
     });
