@@ -35,4 +35,8 @@ describe('Server path: /items/create', () => {
                                      'textarea#description-input'), '');
     });
   });
+  describe('POST', () => {
+    it('create a new item and then render it', () => {
+    });
+  });
 });
