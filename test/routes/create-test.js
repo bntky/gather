@@ -38,6 +38,11 @@ describe('Server path: /items/create', () => {
   describe('POST', () => {
     it('create a new item and then render it', () => {
       const item = buildItemObject();
+
+      const response = await request(app).
+            post('/items/create').
+            type('form').
+            send(item);
     });
   });
 });
