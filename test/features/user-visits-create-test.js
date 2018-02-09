@@ -13,7 +13,7 @@ describe('User visits create page', () => {
       browser.click('#submit-button');
 
       assert.include(browser.getText('body'), title);
-      assert.include(browser.getAttribute('body img', 'src'), imageUrl);
+      assert.include(browser.getAttribute('.item-img', 'src'), imageUrl);
     });
   });
 });
