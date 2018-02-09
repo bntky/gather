@@ -13,7 +13,8 @@ router.get('/items/create', async (req, res, next) => {
 });
 
 router.post('/items/create', async (req, res, next) => {
-  res.render('index');
+  const items = [req.body];
+  res.render('index', { items });
 });
 
 
