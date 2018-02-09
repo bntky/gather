@@ -36,7 +36,7 @@ describe('Server path: /items/create', () => {
     });
   });
   describe('POST', () => {
-    it('create a new item and then render it', () => {
+    it('create a new item and then render it', async () => {
       const item = buildItemObject();
 
       const response = await request(app).
