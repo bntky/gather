@@ -28,6 +28,11 @@ describe('Server path: /items/create', () => {
   describe('GET', () => {
     it('renders empty input fields', async () => {
       const response = await request(app).get('/items/create');
+
+      assert.equal(parseTextFromHTML(response.body, 'input#title-input'), '');
+      assert.equal(parseTextFromHTML(response.body, 'input#imgUrl-input'), '');
+      assert.equal(parseTextFromHTML(response.body,
+                                     'textarea#description-input'), '');
     });
   });
 });
