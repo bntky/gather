@@ -43,6 +43,10 @@ describe('Server path: /items/create', () => {
             post('/items/create').
             type('form').
             send(item);
+
+      assert.include(parseTextFromHTML(response.text, '.item-title'), item.title);
+      const imageElement = findImageElementBySource(response.text, item.imageUrl);
+      assert.equal(imageElement.src, item.imageUrl);
     });
   });
 });
