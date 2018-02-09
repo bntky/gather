@@ -27,6 +27,7 @@ describe('Server path: /items/create', () => {
   // Write your describe blocks below:
   describe('GET', () => {
     it('renders empty input fields', async () => {
+      const response = await request(app).get('/items/create');
     });
   });
 });
