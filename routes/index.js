@@ -12,6 +12,8 @@ router.get('/items/create', async (req, res, next) => {
   res.render('create');
 });
 
+router.post('/items/create', async (req, res, next) => {
+});
 
 
 module.exports = router;
