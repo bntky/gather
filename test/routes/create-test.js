@@ -37,6 +37,7 @@ describe('Server path: /items/create', () => {
   });
   describe('POST', () => {
     it('create a new item and then render it', () => {
+      const item = buildItemObject();
     });
   });
 });
