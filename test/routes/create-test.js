@@ -25,5 +25,8 @@ describe('Server path: /items/create', () => {
   afterEach(diconnectDatabase);
 
   // Write your describe blocks below:
-
+  describe('GET', () => {
+    it('renders empty input fields', async () => {
+    });
+  });
 });
