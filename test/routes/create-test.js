@@ -36,7 +36,7 @@ describe('Server path: /items/create', () => {
     });
   });
   describe('POST', () => {
-    it('create a new item and then render it', async () => {
+    it('create a new item and adds it to the database', async () => {
       const item = buildItemObject();
 
       const response = await request(app).
@@ -44,9 +44,72 @@ describe('Server path: /items/create', () => {
             type('form').
             send(item);
 
-      assert.include(parseTextFromHTML(response.text, '.item-title'), item.title);
-      const imageElement = findImageElementBySource(response.text, item.imageUrl);
-      assert.equal(imageElement.src, item.imageUrl);
+      const createdItem = await Item.findOne(item);
+
+      assert.ok(createdItem, 'Item was not added to the database');
+    });
+
+    it('redirects to the root page', async () => {
+      const item = buildItemObject();
+
+      const response = await request(app).
+            post('/items/create').
+            type('form').
+            send(item);
+
+      assert.equal(response.status, 302);
+      assert.equal(response.headers.location, '/');
+    });
+
+    it('display an error when supplied title is empty', async () => {
+      const item = {
+        description: 'I don\'t know what this is!',
+        imageUrl: 'http://placebear.com/g/400/550'
+      };
+
+      const response = await request(app).
+            post('/items/create').
+            type('form').
+            send(item);
+
+      const items = await Item.find({});
+      assert.equal(items.length, 0);
+      assert.equal(response.status, 400);
+      assert.include(parseTextFromHTML(response.text, 'form'), 'required');
+    });
+
+    it('display an error when supplied description is empty', async () => {
+      const item = {
+        title: 'unknown',
+        imageUrl: 'http://placebear.com/g/400/550'
+      };
+
+      const response = await request(app).
+            post('/items/create').
+            type('form').
+            send(item);
+
+      const items = await Item.find({});
+      assert.equal(items.length, 0);
+      assert.equal(response.status, 400);
+      assert.include(parseTextFromHTML(response.text, 'form'), 'required');
+    });
+
+    it('display an error when supplied imageUrl is empty', async () => {
+      const item = {
+        title: 'unknown',
+        description: 'words sometimes numbers'
+      };
+
+      const response = await request(app).
+            post('/items/create').
+            type('form').
+            send(item);
+
+      const items = await Item.find({});
+      assert.equal(items.length, 0);
+      assert.equal(response.status, 400);
+      assert.include(parseTextFromHTML(response.text, 'form'), 'required');
     });
   });
 });

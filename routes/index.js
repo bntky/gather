@@ -13,8 +13,16 @@ router.get('/items/create', async (req, res, next) => {
 });
 
 router.post('/items/create', async (req, res, next) => {
-  const items = [req.body];
-  res.render('index', { items });
+  const {title, description, imageUrl} = req.body;
+  const item = new Item({title, description, imageUrl});
+  item.validateSync();
+
+  if( item.errors ) {
+    res.status(400).render('create', { newItem: item });
+  } else {
+    await item.save();
+    res.redirect('/');
+  }
 });
 
 
