@@ -26,7 +26,7 @@ router.post('/items/create', async (req, res, next) => {
 });
 
 router.get('/items/:id', async (req, res, next) => {
-  res.send('<div id="item-title"></div>');
+  res.send('<div id="item-title">My favorite item</div>');
 });
 
 module.exports = router;
