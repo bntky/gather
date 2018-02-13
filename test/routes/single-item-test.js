@@ -12,5 +12,16 @@ describe('Server path: /items/:id', () => {
   afterEach(diconnectDatabase);
 
   // Write your test blocks below:
-  
+  describe('GET', () => {
+    it('returns an item with a title and description', async () => {
+      const item = await seedItemToDatabase();
+
+      const response = await request(app).get('/items/' + item._id.toString());
+
+      assert.equal(parseTextFromHTML(response.text, '#item-title'),
+                   item.title);
+      assert.equal(parseTextFromHTML(response.text, '#item-description'),
+                   item.description);
+    });
+  });
 });
