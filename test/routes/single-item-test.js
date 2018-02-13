@@ -18,10 +18,10 @@ describe('Server path: /items/:id', () => {
 
       const response = await request(app).get('/items/' + item._id.toString());
 
-      assert.equal(parseTextFromHTML(response.text, '#item-title'),
-                   item.title);
-      assert.equal(parseTextFromHTML(response.text, '#item-description'),
-                   item.description);
+      assert.include(parseTextFromHTML(response.text, '#item-title'),
+                     item.title);
+      assert.include(parseTextFromHTML(response.text, '#item-description'),
+                     item.description);
     });
   });
 });
