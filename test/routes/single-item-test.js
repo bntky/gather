@@ -1,5 +1,6 @@
 const {assert} = require('chai');
 const request = require('supertest');
+const {jsdom} = require('jsdom');
 
 const app = require('../../app');
 
@@ -32,6 +33,16 @@ describe('Server path: /items/:id', () => {
 
       assert.include(parseTextFromHTML(response.text, '#item-title'),
                      item.title);
+    });
+
+    it('returns an item with the correct image URL', async () => {
+      const imageUrl = 'https://my.image.url.com/foobar.png';
+      const item = await seedItemToDatabase({imageUrl});
+
+      const response = await request(app).get('/items/' + item._id.toString());
+
+      assert.include(jsdom(response.text).querySelector('.single-item-img img').
+                     getAttribute('src'), imageUrl);
     });
   });
 });
