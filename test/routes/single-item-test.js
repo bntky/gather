@@ -1,10 +1,9 @@
 const {assert} = require('chai');
 const request = require('supertest');
-const {jsdom} = require('jsdom');
 
 const app = require('../../app');
 
-const {parseTextFromHTML, seedItemToDatabase} = require('../test-utils');
+const {parseTextFromHTML, seedItemToDatabase, parseAttributeFromHTML} = require('../test-utils');
 const {connectDatabaseAndDropData, diconnectDatabase} = require('../setup-teardown-utils');
 
 describe('Server path: /items/:id', () => {
@@ -41,8 +40,8 @@ describe('Server path: /items/:id', () => {
 
       const response = await request(app).get('/items/' + item._id.toString());
 
-      assert.include(jsdom(response.text).querySelector('.single-item-img img').
-                     getAttribute('src'), imageUrl);
+      assert.include(parseAttributeFromHTML(response.text, '.single-item-img img',
+                                            'src'), imageUrl);
     });
   });
 });

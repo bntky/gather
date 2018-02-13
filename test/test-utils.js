@@ -26,8 +26,26 @@ const parseTextFromHTML = (htmlAsString, selector) => {
   }
 };
 
+// extract an attribute from an HTML element by selector
+const parseAttributeFromHTML = (htmlAsString, selector, attribute) => {
+  const selectedElement = jsdom(htmlAsString).querySelector(selector);
+
+  if (selectedElement === null) {
+    throw new Error(`No element with selector ${selector} found in HTML string`);
+  }
+  
+  const attrValue = selectedElement.getAttribute(attribute);
+
+  if (attrValue === null) {
+    throw new Error(`No attribute ${attribute} on element ${selector} in HTML string`);
+  }
+
+  return attrValue;
+};
+
 module.exports = {
   buildItemObject,
   seedItemToDatabase,
   parseTextFromHTML,
+  parseAttributeFromHTML
 };
