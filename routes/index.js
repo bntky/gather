@@ -26,10 +26,7 @@ router.post('/items/create', async (req, res, next) => {
 });
 
 router.get('/items/:id', async (req, res, next) => {
-  const item = {
-    title: 'My favorite item',
-    description: 'Just the best item'
-  };
+  const item = await Item.findById(req.params.id);
   res.render('single', {item});
 });
 

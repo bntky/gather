@@ -23,5 +23,15 @@ describe('Server path: /items/:id', () => {
       assert.include(parseTextFromHTML(response.text, '#item-description'),
                      item.description);
     });
+
+    it('returns an item with a different title', async () => {
+      const title = 'A different item';
+      const item = await seedItemToDatabase({title});
+
+      const response = await request(app).get('/items/' + item._id.toString());
+
+      assert.include(parseTextFromHTML(response.text, '#item-title'),
+                     item.title);
+    });
   });
 });
