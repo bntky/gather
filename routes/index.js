@@ -25,5 +25,8 @@ router.post('/items/create', async (req, res, next) => {
   }
 });
 
+router.get('/items/:id', async (req, res, next) => {
+  res.send('<div id="item-title"></div>');
+});
 
 module.exports = router;
