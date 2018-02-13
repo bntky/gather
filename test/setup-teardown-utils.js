@@ -9,7 +9,12 @@ const diconnectDatabase = async () => {
   await mongoose.disconnect();
 };
 
+const fakeId = (id) => {
+  return mongoose.Types.ObjectId(id);
+};
+
 module.exports = {
   connectDatabaseAndDropData,
   diconnectDatabase,
+  fakeId
 };

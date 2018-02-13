@@ -4,7 +4,7 @@ const request = require('supertest');
 const app = require('../../app');
 
 const {parseTextFromHTML, seedItemToDatabase, parseAttributeFromHTML} = require('../test-utils');
-const {connectDatabaseAndDropData, diconnectDatabase} = require('../setup-teardown-utils');
+const {connectDatabaseAndDropData, diconnectDatabase, fakeId} = require('../setup-teardown-utils');
 
 describe('Server path: /items/:id', () => {
   beforeEach(connectDatabaseAndDropData);
@@ -42,6 +42,15 @@ describe('Server path: /items/:id', () => {
 
       assert.include(parseAttributeFromHTML(response.text, '.single-item-img img',
                                             'src'), imageUrl);
+    });
+
+    it('returns not found when given item id not in database', async () => {
+      const itemId = fakeId(12345);
+
+      const response = await request(app).get('/items/' + itemId.toString());
+
+      assert.equal(response.status, 404);
+      assert.include(response.text, 'Item not found');
     });
   });
 });
