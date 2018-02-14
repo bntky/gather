@@ -24,10 +24,16 @@ describe('User visits create page', () => {
       browser.setValue('#description-input', description);
       browser.setValue('#imageUrl-input', imageUrl);
       browser.click('#submit-button');
-      browser.click('.delete-form');
+
+      // No submit button for delete form and Javascript to set up
+      // onclick event in browser not run in test suite.  So, the
+      // following is the equivalent of document.click('.delete-form').
+      // Please suggest a better solution if there is one.
+      browser.execute(function () {
+        document.querySelectorAll('.delete-form')[0].submit();
+      });
 
       assert.notInclude(browser.getText('body'), title);
-      assert.notInclude(browser.getAttribute('.item-img', 'src'), imageUrl);
     });
   });
 });
