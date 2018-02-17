@@ -38,6 +38,12 @@ router.get('/items/:id', async (req, res, next) => {
 
 router.post('/items/:id/delete', async (req, res, next) => {
   const item = await Item.findById(req.params.id);
+
+  if (item === null) {
+    res.status(404).send('Item not found');
+    return;
+  }
+
   await item.remove();
   res.redirect('/');
 });
