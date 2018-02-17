@@ -36,6 +36,12 @@ const useItemById = async (id, res, callback) => {
   callback(item, res);
 };
 
+router.get('/items/:id/update', async (req, res, next) => {
+  useItemById(req.params.id, res, async (item, res) => {
+    res.render('update', { newItem: item});
+  });
+});
+
 router.get('/items/:id', async (req, res, next) => {
   useItemById(req.params.id, res, async (item, res) => {
     res.render('single', {item});
