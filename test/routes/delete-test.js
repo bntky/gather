@@ -41,3 +41,26 @@ describe('Server path: /items/:id/delete', () => {
     });
   });
 });
+
+// Make the interface more like a REST interface and delete with HTTP DELETE
+describe('Server path: /items/:id', () => {
+
+  beforeEach(connectDatabaseAndDropData);
+
+  afterEach(diconnectDatabase);
+
+  describe('DELETE', () => {
+    it('seed a new item in the database and delete it', async () => {
+      const item = await seedItemToDatabase();
+
+      const response = await request(app).
+            delete('/items/' + item._id.toString()).
+            type('form').
+            send({});
+
+      const deletedItem = await Item.findById(item._id);
+
+      assert.isNull(deletedItem, 'Item was not removed from the database');
+    });
+  });
+});

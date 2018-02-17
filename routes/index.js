@@ -49,4 +49,11 @@ router.post('/items/:id/delete', async (req, res, next) => {
   });
 });
 
+router.delete('/items/:id', async (req, res, next) => {
+  useItemById(req.params.id, res, async (item, res) => {
+    await item.remove();
+    res.redirect('/');
+  });
+});
+
 module.exports = router;
