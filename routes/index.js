@@ -25,27 +25,28 @@ router.post('/items/create', async (req, res, next) => {
   }
 });
 
-router.get('/items/:id', async (req, res, next) => {
-  const item = await Item.findById(req.params.id);
+const useItemById = async (id, res, callback) => {
+  const item = await Item.findById(id);
 
   if (item === null) {
     res.status(404).send('Item not found');
     return;
   }
   
-  res.render('single', {item});
+  callback(item, res);
+};
+
+router.get('/items/:id', async (req, res, next) => {
+  useItemById(req.params.id, res, async (item, res) => {
+    res.render('single', {item});
+  });
 });
 
 router.post('/items/:id/delete', async (req, res, next) => {
-  const item = await Item.findById(req.params.id);
-
-  if (item === null) {
-    res.status(404).send('Item not found');
-    return;
-  }
-
-  await item.remove();
-  res.redirect('/');
+  useItemById(req.params.id, res, async (item, res) => {
+    await item.remove();
+    res.redirect('/');
+  });
 });
 
 module.exports = router;
