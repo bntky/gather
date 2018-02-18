@@ -31,4 +31,26 @@ describe('Server path: /items/:id/update', () => {
         item.description);
     });
   });
+
+  describe('POST', () => {
+    it('makes changes to existing item in the database', async () => {
+      const item = await seedItemToDatabase();
+      const newItem = {
+        title: 'Changing the title',
+        description: 'The item is totally different now',
+        imageUrl: 'http://something.to.look.at.com/my.png'
+      };
+
+      const response = await request(app).
+            post('/items/' + item._id.toString() + '/update').
+            type('form').
+            send(newItem);
+
+      const updatedItem = await Item.findById(item._id);
+
+      assert.equal(updatedItem.title, newItem.title);
+      assert.equal(updatedItem.description, newItem.description);
+      assert.equal(updatedItem.imageUrl, newItem.imageUrl);
+    });
+  });
 });
