@@ -25,6 +25,22 @@ router.post('/items/create', async (req, res, next) => {
   }
 });
 
+router.post('/items/:id/update', async (req, res, next) => {
+  const {title, description, imageUrl} = req.body;
+  let item = await Item.findById(req.params.id);
+  await Item.where({ _id: item._id }).update({$set: {title, description, imageUrl}}).exec();
+  item = await Item.findById(req.params.id);
+  
+  item.validateSync();
+
+  if( item.errors ) {
+    res.status(400).render('create', { newItem: item });
+  } else {
+    await item.save();
+    res.redirect('/');
+  }
+});
+
 const useItemById = async (id, res, callback) => {
   const item = await Item.findById(id);
 
