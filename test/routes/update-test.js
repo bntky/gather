@@ -52,5 +52,24 @@ describe('Server path: /items/:id/update', () => {
       assert.equal(updatedItem.description, newItem.description);
       assert.equal(updatedItem.imageUrl, newItem.imageUrl);
     });
+
+    it('existing item in database not modified to be invalid', async () => {
+      const item = await seedItemToDatabase();
+      const newItem = {
+        title: undefined,
+        description: item.description,
+        imageUrl: item.imageUrl
+      };
+
+      const response = await request(app).
+            post('/items/' + item._id.toString() + '/update').
+            type('form').
+            send(newItem);
+
+      const updatedItem = await Item.findById(item._id);
+
+      assert.equal(response.status, 400);
+      assert.strictEqual(updatedItem.title, item.title);
+    });
   });
 });
