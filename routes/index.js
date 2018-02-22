@@ -28,15 +28,15 @@ router.post('/items/create', async (req, res, next) => {
 router.post('/items/:id/update', async (req, res, next) => {
   const {title, description, imageUrl} = req.body;
   let item = await Item.findById(req.params.id);
-  await Item.where({ _id: item._id }).update({$set: {title, description, imageUrl}}).exec();
-  item = await Item.findById(req.params.id);
-  
+  item.title = title;
+  item.description = description;
+  item.imageUrl = imageUrl;
   item.validateSync();
 
   if( item.errors ) {
-    res.status(400).render('create', { newItem: item });
+    res.status(400).render('create', { newItem: req.body });
   } else {
-    await item.save();
+    item.save();
     res.redirect('/');
   }
 });
