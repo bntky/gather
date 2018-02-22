@@ -19,7 +19,7 @@ describe('Server path: /items/:id/delete', () => {
       const item = await seedItemToDatabase();
 
       const response = await request(app).
-            post('/items/' + item._id.toString() + '/delete').
+            post(`/items/${item._id}/delete`).
             type('form').
             send({});
 
@@ -32,7 +32,7 @@ describe('Server path: /items/:id/delete', () => {
       const itemId = fakeId(12345);
 
       const response = await request(app).
-            post('/items/' + itemId.toString() + '/delete').
+            post(`/items/${itemId}/delete`).
             type('form').
             send({});
 
@@ -54,7 +54,7 @@ describe('Server path: /items/:id', () => {
       const item = await seedItemToDatabase();
 
       const response = await request(app).
-            delete('/items/' + item._id.toString()).
+            delete(`/items/${item._id}`).
             type('form').
             send({});
 

@@ -16,7 +16,7 @@ describe('Server path: /items/:id', () => {
     it('returns an item with a title and description', async () => {
       const item = await seedItemToDatabase();
 
-      const response = await request(app).get('/items/' + item._id.toString());
+      const response = await request(app).get(`/items/${item._id}`);
 
       assert.include(parseTextFromHTML(response.text, '#item-title'),
                      item.title);
@@ -28,7 +28,7 @@ describe('Server path: /items/:id', () => {
       const title = 'A different item';
       const item = await seedItemToDatabase({title});
 
-      const response = await request(app).get('/items/' + item._id.toString());
+      const response = await request(app).get(`/items/${item._id}`);
 
       assert.include(parseTextFromHTML(response.text, '#item-title'),
                      item.title);
@@ -38,7 +38,7 @@ describe('Server path: /items/:id', () => {
       const imageUrl = 'https://my.image.url.com/foobar.png';
       const item = await seedItemToDatabase({imageUrl});
 
-      const response = await request(app).get('/items/' + item._id.toString());
+      const response = await request(app).get(`/items/${item._id}`);
 
       assert.include(parseAttributeFromHTML(response.text, '.single-item-img img',
                                             'src'), imageUrl);
@@ -47,7 +47,7 @@ describe('Server path: /items/:id', () => {
     it('returns not found when given item id not in database', async () => {
       const itemId = fakeId(12345);
 
-      const response = await request(app).get('/items/' + itemId.toString());
+      const response = await request(app).get(`/items/${itemId}`);
 
       assert.equal(response.status, 404);
       assert.include(response.text, 'Item not found');

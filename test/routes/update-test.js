@@ -18,7 +18,7 @@ describe('Server path: /items/:id/update', () => {
     it('renders existing item for update', async () => {
       const item = await seedItemToDatabase();
 
-      const response = await request(app).get('/items/' + item._id.toString() + '/update');
+      const response = await request(app).get(`/items/${item._id}/update`);
 
       assert.equal(
         parseAttributeFromHTML(response.text, 'input#title-input', 'value'),
@@ -42,7 +42,7 @@ describe('Server path: /items/:id/update', () => {
       };
 
       const response = await request(app).
-            post('/items/' + item._id.toString() + '/update').
+            post(`/items/${item._id}/update`).
             type('form').
             send(newItem);
 
@@ -62,7 +62,7 @@ describe('Server path: /items/:id/update', () => {
       };
 
       const response = await request(app).
-            post('/items/' + item._id.toString() + '/update').
+            post(`/items/${item._id}/update`).
             type('form').
             send(newItem);
 
