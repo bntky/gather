@@ -48,7 +48,7 @@ const useItemById = async (id, res, callback) => {
     res.status(404).send('Item not found');
     return;
   }
-  
+
   callback(item, res);
 };
 

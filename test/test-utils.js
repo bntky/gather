@@ -40,7 +40,7 @@ const parseAttributeFromHTML = (htmlAsString, selector, attribute) => {
   if (selectedElement === null) {
     throw new Error(`No element with selector ${selector} found in HTML string`);
   }
-  
+
   const attrValue = selectedElement.getAttribute(attribute);
 
   if (attrValue === null) {

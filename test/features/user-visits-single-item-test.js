@@ -25,7 +25,7 @@ describe('User visits single item page', () => {
       browser.setValue('#imageUrl-input', imageUrl);
       browser.click('#submit-button');
       browser.click('.item-card a');
-      
+
       browser.click('.update-button');
       browser.setValue('#title-input', newTitle);
       browser.click('#submit-button');
