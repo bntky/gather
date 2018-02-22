@@ -16,7 +16,8 @@ describe('User visits create page', () => {
       assert.include(browser.getAttribute('.item-img', 'src'), imageUrl);
     });
 
-    it('and then deletes the item', () => {
+    it('and then deletes the item', function() {
+      this.retries(3);
       const {title, description, imageUrl} = buildItemObject();
       browser.url('/items/create');
 
