@@ -8,7 +8,13 @@ module.exports = mongoose.model(
       type: String,
       required: true,
       minlength: [2, 'Path `title` is too short.'],
-      maxlength: [100, 'Path `title` is too long.']
+      maxlength: [100, 'Path `title` is too long.'],
+      validate: {
+        validator: function(v) {
+          return /\w/.test(v);
+        },
+        message: 'Path `title` needs words.'
+      }
     },
     description: {
       type: String,

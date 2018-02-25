@@ -47,6 +47,15 @@ describe('Model: Item', () => {
       
       assert.equal(item.errors.title.message, 'Path `title` is too long.');
     });
+
+    it('includes word characters', () => {
+      const title = '    !!  *** {} ^';
+      const item = new Item({title});
+
+      item.validateSync();
+
+      assert.equal(item.errors.title.message, 'Path `title` needs words.');
+    });
   });
 
   describe('description field', () => {
