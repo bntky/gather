@@ -7,7 +7,8 @@ module.exports = mongoose.model(
     title: {
       type: String,
       required: true,
-      minlength: [2, 'Path `title` is too short.']
+      minlength: [2, 'Path `title` is too short.'],
+      maxlength: [100, 'Path `title` is too long.']
     },
     description: {
       type: String,

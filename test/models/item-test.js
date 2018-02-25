@@ -38,6 +38,15 @@ describe('Model: Item', () => {
 
       assert.equal(item.errors.title.message, 'Path `title` is too short.');
     });
+
+    it('is no longer than 100 characters', () => {
+      const title = 'a'.repeat(30) + ' ' + 'b'.repeat(30) + ' ' + 'c'.repeat(39);
+      const item = new Item({title});
+
+      item.validateSync();
+      
+      assert.equal(item.errors.title.message, 'Path `title` is too long.');
+    });
   });
 
   describe('description field', () => {
