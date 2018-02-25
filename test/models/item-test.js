@@ -83,6 +83,15 @@ describe('Model: Item', () => {
 
       assert.equal(item.errors.description.message, 'Path `description` is too short.');
     });
+
+    it('is no longer than 10,000 characters', () => {
+      const description = ('i'.repeat(9) + ' ').repeat(1000) + '.';
+      const item = new Item({description});
+
+      item.validateSync();
+
+      assert.equal(item.errors.description.message, 'Path `description` is too long.');
+    });
   });
 
   describe('imageUrl field', () => {
