@@ -18,7 +18,8 @@ module.exports = mongoose.model(
     },
     description: {
       type: String,
-      required: true
+      required: true,
+      minlength: [5, 'Path `description` is too short.']
     },
     imageUrl: {
       type: String,

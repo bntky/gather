@@ -74,6 +74,15 @@ describe('Model: Item', () => {
 
       assert.equal(item.errors.description.message, 'Path `description` is required.');
     });
+
+    it('is at least 5 characters long', () => {
+      const description = 'foo ';
+      const item = new Item({description});
+
+      item.validateSync();
+
+      assert.equal(item.errors.description.message, 'Path `description` is too short.');
+    });
   });
 
   describe('imageUrl field', () => {
