@@ -20,7 +20,13 @@ module.exports = mongoose.model(
       type: String,
       required: true,
       minlength: [5, 'Path `description` is too short.'],
-      maxlength: [10000, 'Path `description` is too long.']
+      maxlength: [10000, 'Path `description` is too long.'],
+      validate: {
+        validator: function(v) {
+          return /\w+\s+\w+/.test(v);
+        },
+        message: 'Path `description` needs to have multiple words.'
+      }
     },
     imageUrl: {
       type: String,

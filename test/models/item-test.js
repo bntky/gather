@@ -92,6 +92,16 @@ describe('Model: Item', () => {
 
       assert.equal(item.errors.description.message, 'Path `description` is too long.');
     });
+
+    it('has two or more words', () => {
+      const description = 'foobar!';
+      const item = new Item({description});
+
+      item.validateSync();
+
+      assert.equal(item.errors.description.message,
+                   'Path `description` needs to have multiple words.');
+    });
   });
 
   describe('imageUrl field', () => {
