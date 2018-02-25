@@ -29,6 +29,15 @@ describe('Model: Item', () => {
 
       assert.equal(item.errors.title.message, 'Path `title` is required.');
     });
+
+    it('is at least 2 characters long', () => {
+      const title = 'a';
+      const item = new Item({title});
+
+      item.validateSync();
+
+      assert.equal(item.errors.title.message, 'Path `title` is too short.');
+    });
   });
 
   describe('description field', () => {

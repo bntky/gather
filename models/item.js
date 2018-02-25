@@ -6,7 +6,8 @@ module.exports = mongoose.model(
   mongoose.Schema({
     title: {
       type: String,
-      required: true
+      required: true,
+      minlength: [2, 'Path `title` is too short.']
     },
     description: {
       type: String,
