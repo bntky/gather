@@ -78,4 +78,14 @@ router.delete('/items/:id', async (req, res, next) => {
   });
 });
 
+router.put('/items/:id/title', async (req, res, next) => {
+  useItemById(req.params.id, res, async (item, res) => {
+    item.title = req.body;
+    item.validateSync();
+
+    item.save();
+    res.redirect('/');
+  });
+});
+
 module.exports = router;
