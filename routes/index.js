@@ -83,8 +83,12 @@ router.put('/items/:id/title', async (req, res, next) => {
     item.title = req.body;
     item.validateSync();
 
-    item.save();
-    res.redirect('/');
+    if( item.errors ) {
+      res.status(400).send('Invalid title: ' + item.errors);
+    } else {
+      item.save();
+      res.redirect('/');
+    }
   });
 });
 

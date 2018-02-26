@@ -27,5 +27,19 @@ describe('Server path: /items/:id/title', () => {
 
       assert.equal(updatedItem.title, newTitle);
     });
+
+    it('will not update a title with invalid data', async () => {
+      const item = await seedItemToDatabase();
+      const id = item._id;
+      const newTitle = '';
+      const response = await request(app).
+            put(`/items/${id}/title`).
+            set('Content-Type', 'text/plain').
+            send(newTitle);
+
+      const updatedItem = await Item.findById(id);
+
+      assert.equal(response.status, 400);
+    });
   });
 });
