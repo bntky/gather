@@ -30,7 +30,15 @@ module.exports = mongoose.model(
     },
     imageUrl: {
       type: String,
-      required: true
+      required: true,
+      validate: {
+        // Found regular expression to match URL on Stack Overflow:
+        // https://stackoverflow.com/questions/3809401/what-is-a-good-regular-expression-to-match-a-url
+        validator: function(v) {
+          return /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/.test(v);
+        },
+        message: 'Path `imageUrl` is not a valid HTTP URL.'
+      }
     },
   })
 );

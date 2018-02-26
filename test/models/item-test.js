@@ -120,5 +120,14 @@ describe('Model: Item', () => {
 
       assert.equal(item.errors.imageUrl.message, 'Path `imageUrl` is required.');
     });
+
+    it('is a valid HTTP URL', () => {
+      const imageUrl = 'file:///foo/bar.png';
+      const item = new Item({ imageUrl });
+
+      item.validateSync();
+
+      assert.equal(item.errors.imageUrl.message, 'Path `imageUrl` is not a valid HTTP URL.');
+    });
   });
 });
