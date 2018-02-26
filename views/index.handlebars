@@ -1,3 +1,13 @@
+{{#with undoId as |id|}}
+<div id="undo-container" class="undo-container">
+  <form class="undo-form" action="/items/{{id}}/undo" method="post" >
+    <input id="id-undo-input" name="id" type="hidden" value="{{id}}">
+    <button id="undo-button" type="submit">
+      <p>Undo last delete</p>
+    </button>
+  </form>
+</div>
+{{/with}}
 <div id="items-container" class="items-container">
   {{#each items as |item|}}
     <div id="item-{{item._id}}" class="item-card">
