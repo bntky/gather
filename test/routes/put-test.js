@@ -41,5 +41,17 @@ describe('Server path: /items/:id/title', () => {
 
       assert.equal(response.status, 400);
     });
+
+    it('will not update a nonexistent item', async () => {
+      const id = fakeId('DEADbeefBEEF');
+      const newTitle = 'Call it something else';
+
+      const response = await request(app).
+            put(`/items/${id}/title`).
+            set('Content-Type', 'text/plain').
+            send(newTitle);
+
+      assert.equal(response.status, 404);
+    });
   });
 });
