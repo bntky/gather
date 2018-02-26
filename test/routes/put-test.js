@@ -55,3 +55,39 @@ describe('Server path: /items/:id/title', () => {
     });
   });
 });
+
+describe('Server path: /items/:id/descripiton', () => {
+  beforeEach(connectDatabaseAndDropData);
+
+  afterEach(diconnectDatabase);
+
+  describe('PUT', () => {
+    it("Updates an item's description with a new description", async () => {
+      const item = await seedItemToDatabase();
+      const id = item._id;
+      const newDescription = 'Describing it in a new and different way blah...';
+      const response = await request(app).
+            put(`/items/${id}/description`).
+            set('Content-Type', 'text/plain').
+            send(newDescription);
+
+      const updatedItem = await Item.findById(id);
+
+      assert.equal(updatedItem.description, newDescription);
+    });
+
+    it('will not update a description with invalid data', async () => {
+      const item = await seedItemToDatabase();
+      const id = item._id;
+      const newDescription = '';
+      const response = await request(app).
+            put(`/items/${id}/description`).
+            set('Content-Type', 'text/plain').
+            send(newDescription);
+
+      const updatedItem = await Item.findById(id);
+
+      assert.equal(response.status, 400);
+    });
+  });
+});
