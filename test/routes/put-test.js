@@ -91,3 +91,39 @@ describe('Server path: /items/:id/descripiton', () => {
     });
   });
 });
+
+describe('Server path: /items/:id/imageUrl', () => {
+  beforeEach(connectDatabaseAndDropData);
+
+  afterEach(diconnectDatabase);
+
+  describe('PUT', () => {
+    it("Updates an item's imageUrl with a new imageUrl", async () => {
+      const item = await seedItemToDatabase();
+      const id = item._id;
+      const newImageUrl = 'http://someplace.else.com/another/url/image.jpg';
+      const response = await request(app).
+            put(`/items/${id}/imageUrl`).
+            set('Content-Type', 'text/plain').
+            send(newImageUrl);
+
+      const updatedItem = await Item.findById(id);
+
+      assert.equal(updatedItem.imageUrl, newImageUrl);
+    });
+
+    it('will not update a imageUrl with invalid data', async () => {
+      const item = await seedItemToDatabase();
+      const id = item._id;
+      const newImageUrl = 'file:///foo/bar/baz.gif';
+      const response = await request(app).
+            put(`/items/${id}/imageUrl`).
+            set('Content-Type', 'text/plain').
+            send(newImageUrl);
+
+      const updatedItem = await Item.findById(id);
+
+      assert.equal(response.status, 400);
+    });
+  });
+});

@@ -106,4 +106,18 @@ router.put('/items/:id/description', async (req, res, next) => {
   });
 });
 
+router.put('/items/:id/imageUrl', async (req, res, next) => {
+  useItemById(req.params.id, res, async (item, res) => {
+    item.imageUrl = req.body;
+    item.validateSync();
+
+    if( item.errors ) {
+      res.status(400).send('Invalid imageUrl: ' + item.errors);
+    } else {
+      item.save();
+      res.redirect('/');
+    }
+  });
+});
+
 module.exports = router;
