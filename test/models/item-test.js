@@ -129,5 +129,14 @@ describe('Model: Item', () => {
 
       assert.equal(item.errors.imageUrl.message, 'Path `imageUrl` is not a valid HTTP URL.');
     });
+
+    it('is no longer than 100 chacters', () => {
+      const imageUrl = 'http://foo.bar.example.com/' + 'p'.repeat(70) + '.svg';
+      const item = new Item({ imageUrl });
+
+      item.validateSync();
+
+      assert.equal(item.errors.imageUrl.message, 'Path `imageUrl` is too long.');
+    });
   });
 });
