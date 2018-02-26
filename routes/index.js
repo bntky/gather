@@ -78,41 +78,13 @@ router.delete('/items/:id', async (req, res, next) => {
   });
 });
 
-router.put('/items/:id/title', async (req, res, next) => {
+router.put('/items/:id/:thePath', async (req, res, next) => {
   useItemById(req.params.id, res, async (item, res) => {
-    item.title = req.body;
+    item[req.params.thePath] = req.body;
     item.validateSync();
 
     if( item.errors ) {
-      res.status(400).send('Invalid title: ' + item.errors);
-    } else {
-      item.save();
-      res.redirect('/');
-    }
-  });
-});
-
-router.put('/items/:id/description', async (req, res, next) => {
-  useItemById(req.params.id, res, async (item, res) => {
-    item.description = req.body;
-    item.validateSync();
-
-    if( item.errors ) {
-      res.status(400).send('Invalid description: ' + item.errors);
-    } else {
-      item.save();
-      res.redirect('/');
-    }
-  });
-});
-
-router.put('/items/:id/imageUrl', async (req, res, next) => {
-  useItemById(req.params.id, res, async (item, res) => {
-    item.imageUrl = req.body;
-    item.validateSync();
-
-    if( item.errors ) {
-      res.status(400).send('Invalid imageUrl: ' + item.errors);
+      res.status(400).send(`Invalid ${req.params.thePath}: ${item.errors}`);
     } else {
       item.save();
       res.redirect('/');
