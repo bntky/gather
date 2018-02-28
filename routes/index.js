@@ -66,14 +66,23 @@ router.get('/items/:id', async (req, res, next) => {
 
 router.post('/items/:id/delete', async (req, res, next) => {
   useItemById(req.params.id, res, async (item, res) => {
-    const id = item._id;
-    
-    await item.remove();
-    const items = await Item.find({});
+    const id = req.params.id;
+
+    item.deleted = true;
+    await item.save();
+    const items = await Item.find({deleted: { $exists: false }});
     res.render('index', {
       items: items,
       undoId: id
     });
+  });
+});
+
+router.post('/items/:id/undo', async (req, res, next) => {
+  useItemById(req.params.id, res, async (item, res) => {
+    item.deleted = undefined;
+    await item.save();
+    res.redirect('/');
   });
 });
 

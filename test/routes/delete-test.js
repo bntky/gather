@@ -25,7 +25,7 @@ describe('Server path: /items/:id/delete', () => {
 
       const deletedItem = await Item.findById(item._id);
 
-      assert.isNull(deletedItem, 'Item was not removed from the database');
+      assert.isNotNull(deletedItem.deleted, 'Item was not removed from the database');
     });
 
     it('fail to delete a nonexistent item', async () => {
