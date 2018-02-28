@@ -41,5 +41,8 @@ module.exports = mongoose.model(
       },
       maxlength: [100, 'Path `imageUrl` is too long.']
     },
+    deleted: {
+      type: Boolean
+    }
   })
 );

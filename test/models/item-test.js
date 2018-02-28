@@ -139,4 +139,14 @@ describe('Model: Item', () => {
       assert.equal(item.errors.imageUrl.message, 'Path `imageUrl` is too long.');
     });
   });
+
+  describe('deleted field', () => {
+    it('is boolean', async () => {
+      const deleted = "true";
+
+      const item = new Item({ deleted });
+
+      assert.isBoolean(item.deleted);
+    });
+  });
 });
